@@ -11,6 +11,11 @@ cask "tidaldrift" do
 
   app "TidalDrift.app"
 
+  postflight do
+    system_command "/usr/bin/xattr",
+                   args: ["-dr", "com.apple.quarantine", "#{appdir}/TidalDrift.app"]
+  end
+
   zap trash: [
     "~/Library/Preferences/com.goldbergconsulting.tidaldrift.plist",
     "~/Library/Application Support/TidalDrift",
