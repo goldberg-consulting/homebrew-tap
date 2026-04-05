@@ -8,6 +8,18 @@ Homebrew formulae and casks for tools by [Goldberg Consulting](https://github.co
 brew tap goldberg-consulting/tap
 ```
 
+## Available formulae
+
+| Formula | Description |
+|---------|-------------|
+| `measured-one-agents-rules` | Install measured.one Cursor agents, rules, and skills |
+
+### measured-one-agents-rules
+
+```bash
+brew install goldberg-consulting/tap/measured-one-agents-rules
+```
+
 ## Available casks
 
 | Cask | Description |
