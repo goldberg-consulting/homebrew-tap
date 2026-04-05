@@ -24,8 +24,17 @@ brew install goldberg-consulting/tap/measured-one-agents-rules
 
 | Cask | Description |
 |------|-------------|
+| `measured-one-agents-rules` | Cursor extension that installs shared agents, rules, and skills into any workspace |
 | `tidaldrift` | Menu-bar Mac utility for discovering, connecting to, and streaming between Macs |
 | `distribute-metal` | macOS menu bar app for distributed PyTorch training on Apple Silicon using Metal and MCCL |
+
+### measured-one-agents-rules
+
+```bash
+brew install --cask goldberg-consulting/tap/measured-one-agents-rules
+```
+
+Installs the Cursor extension and CLI tools (`measured-one-agents-rules-install`).
 
 ### TidalDrift
 
