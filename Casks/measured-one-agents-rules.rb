@@ -1,6 +1,6 @@
 cask "measured-one-agents-rules" do
-  version "0.1.0"
-  sha256 "8a14db6f366377d773bccf760f46eafecdb7bad052e5c87b2ec5035536c66305"
+  version "0.2.0"
+  sha256 "3042c8de18910f3825a9a489d5695554b34d04c6e1b506b0b7e48ee799bec864"
 
   url "https://github.com/goldberg-consulting/measured.one.agents-rules/releases/download/v#{version}/measured-one-agents-rules-#{version}.vsix"
   name "measured.one Agents & Rules"
