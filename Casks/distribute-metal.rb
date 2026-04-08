@@ -1,6 +1,6 @@
 cask "distribute-metal" do
-  version "0.2.0"
-  sha256 "2dd86a81e23f64be3c0777025fce2621e2bb81315369febb8fcbad8b3b8f37e4"
+  version "0.2.1"
+  sha256 "0614ebb0d507aa457bf4138738286a8afc5562c0e9d376087adf2d1e789cc8e6"
 
   url "https://github.com/goldberg-consulting/measured.one.distribute-metal/releases/download/v#{version}/DistributeMetal-#{version}.dmg"
   name "measured.one.distribute-metal"
