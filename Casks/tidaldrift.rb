@@ -1,6 +1,6 @@
 cask "tidaldrift" do
-  version "1.5.13"
-  sha256 "ad01bfc5d3751b3c8ede01c5796d0b86cee18f42cb948d3ccd9e87375f8dc9db"
+  version "1.5.14"
+  sha256 "5d07dc9ba8c9c67791694d85012d15ce97225e5401ae1c9890606821119fe552"
 
   url "https://github.com/goldberg-consulting/measured.one.tidaldrift/releases/download/v#{version}/TidalDrift-#{version}.dmg"
   name "TidalDrift"
@@ -24,6 +24,16 @@ cask "tidaldrift" do
   postflight do
     system_command "/usr/bin/xattr",
                    args: ["-dr", "com.apple.quarantine", "#{appdir}/TidalDrift.app"]
+
+    # Brew upgrades replace the signed app bundle, but macOS TCC permissions
+    # remain keyed to the bundle identity and can get stuck on the prior build.
+    # Reset only on install/upgrade, not app launch, so the next app start gets
+    # fresh visible prompts without blocking the menu bar UI.
+    ["ScreenCapture", "Accessibility", "ListenEvent", "LocalNetwork"].each do |service|
+      system_command "/usr/bin/tccutil",
+                     args: ["reset", service, "com.goldbergconsulting.tidaldrift"],
+                     must_succeed: false
+    end
   end
 
   zap trash: [
