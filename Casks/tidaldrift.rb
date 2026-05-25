@@ -1,6 +1,6 @@
 cask "tidaldrift" do
-  version "1.5.12"
-  sha256 "b9b0672fc1d8adb8655974a323ad31ef7a6a3b58dcff9da706a9947a60985154"
+  version "1.5.13"
+  sha256 "ad01bfc5d3751b3c8ede01c5796d0b86cee18f42cb948d3ccd9e87375f8dc9db"
 
   url "https://github.com/goldberg-consulting/measured.one.tidaldrift/releases/download/v#{version}/TidalDrift-#{version}.dmg"
   name "TidalDrift"
@@ -15,6 +15,8 @@ cask "tidaldrift" do
   depends_on macos: :ventura
 
   app "TidalDrift.app"
+
+  uninstall quit: "com.goldbergconsulting.tidaldrift"
 
   # Strip Gatekeeper quarantine. Required while notarization is pending
   # agreement renewal for team 97UY84BV45; the DMG is Developer ID signed
