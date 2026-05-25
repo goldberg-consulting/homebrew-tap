@@ -1,6 +1,6 @@
 cask "tidaldrift" do
-  version "1.5.14"
-  sha256 "5d07dc9ba8c9c67791694d85012d15ce97225e5401ae1c9890606821119fe552"
+  version "1.5.15"
+  sha256 "994e23772d965e8a745ae59db0e4f3ca71d99c1ac3bdbd9fa336373e656ec1f3"
 
   url "https://github.com/goldberg-consulting/measured.one.tidaldrift/releases/download/v#{version}/TidalDrift-#{version}.dmg"
   name "TidalDrift"
@@ -29,7 +29,11 @@ cask "tidaldrift" do
     # remain keyed to the bundle identity and can get stuck on the prior build.
     # Reset only on install/upgrade, not app launch, so the next app start gets
     # fresh visible prompts without blocking the menu bar UI.
-    ["ScreenCapture", "Accessibility", "ListenEvent", "LocalNetwork"].each do |service|
+    #
+    # Local Network is intentionally omitted. macOS Local Network Privacy is
+    # not resettable via tccutil, even though it appears in Privacy & Security.
+    # Users must toggle it manually if it gets stuck.
+    ["All", "ScreenCapture", "Accessibility", "ListenEvent"].each do |service|
       system_command "/usr/bin/tccutil",
                      args: ["reset", service, "com.goldbergconsulting.tidaldrift"],
                      must_succeed: false
