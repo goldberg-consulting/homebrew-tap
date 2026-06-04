@@ -1,6 +1,6 @@
 cask "tidaldrift" do
-  version "1.6.19"
-  sha256 "d96e4ee0fbdec01239791b20dbd977ec45ab96e6da9ff05206e9548715911849"
+  version "1.6.20"
+  sha256 "8014da1eeaf1b44f5b4c51c6795ae1fccc7b292107c1512cef01fe98020ed4bb"
 
   url "https://github.com/goldberg-consulting/measured.one.tidaldrift/releases/download/v#{version}/TidalDrift-#{version}.dmg"
   name "TidalDrift"
