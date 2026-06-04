@@ -1,6 +1,6 @@
 cask "tidaldrift" do
-  version "1.6.5"
-  sha256 "b5ba02bc7838fcdcfabb9480944afd31ffc4586797a90f36b49072abb2741e81"
+  version "1.6.6"
+  sha256 "ce23c45eb31283c289848651a0c698821ad4577f4860b53cbbbeddf063b07049"
 
   url "https://github.com/goldberg-consulting/measured.one.tidaldrift/releases/download/v#{version}/TidalDrift-#{version}.dmg"
   name "TidalDrift"
@@ -16,26 +16,18 @@ cask "tidaldrift" do
 
   app "TidalDrift.app"
 
-  # Strip Gatekeeper quarantine. Required while notarization is pending
-  # agreement renewal for team 97UY84BV45; the DMG is Developer ID signed
-  # but not yet notarized. Re-notarization will be restored in a follow-up.
+  # Strip the Gatekeeper quarantine attribute so the freshly downloaded app
+  # launches without an "unidentified developer" block. The DMG is Developer ID
+  # signed and notarized, so this is a belt-and-suspenders step.
+  #
+  # We deliberately do NOT run `tccutil reset` here. The app is signed with a
+  # stable bundle ID and Developer ID, so macOS preserves Screen Recording,
+  # Accessibility, and Input Monitoring grants across upgrades. Resetting on
+  # every upgrade wiped those permissions and silently broke hosting/control
+  # (e.g. LocalCast capture and remote input) until the user re-granted them.
   postflight do
     system_command "/usr/bin/xattr",
                    args: ["-dr", "com.apple.quarantine", "#{appdir}/TidalDrift.app"]
-
-    # Brew upgrades replace the signed app bundle, but macOS TCC permissions
-    # remain keyed to the bundle identity and can get stuck on the prior build.
-    # Reset only on install/upgrade, not app launch, so the next app start gets
-    # fresh visible prompts without blocking the menu bar UI.
-    #
-    # Local Network is intentionally omitted. macOS Local Network Privacy is
-    # not resettable via tccutil, even though it appears in Privacy & Security.
-    # Users must toggle it manually if it gets stuck.
-    %w[All ScreenCapture Accessibility ListenEvent].each do |service|
-      system_command "/usr/bin/tccutil",
-                     args:         ["reset", service, "com.goldbergconsulting.tidaldrift"],
-                     must_succeed: false
-    end
   end
 
   uninstall quit: "com.goldbergconsulting.tidaldrift"
