@@ -1,0 +1,28 @@
+name: Validate Find Yoshi IT
+on:
+  pull_request:
+    paths:
+      - 'Casks/find-yoshi-it.rb'
+      - 'scripts/**'
+      - 'tests/**'
+      - '.github/workflows/*find-yoshi-it.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: macos-15
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: python3 -m unittest discover -s tests
+      - name: Validate installation and upgrade
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          brew tap --custom-remote goldberg-consulting/tap "$GITHUB_WORKSPACE"
+          brew style --cask goldberg-consulting/tap/find-yoshi-it
+          python3 scripts/verify-find-yoshi-it-upgrade.py

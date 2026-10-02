@@ -1,0 +1,49 @@
+name: Update Find Yoshi IT
+on:
+  schedule:
+    - cron: '17,47 * * * *'
+  workflow_dispatch:
+concurrency:
+  group: update-find-yoshi-it
+  cancel-in-progress: false
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: macos-15
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: python3 -m unittest discover -s tests
+      - name: Check latest published release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/update-find-yoshi-it.py
+      - name: Detect version change
+        id: changes
+        run: |
+          if git diff --quiet -- Casks/find-yoshi-it.rb; then
+            echo 'changed=false' >> "$GITHUB_OUTPUT"
+          else
+            echo 'changed=true' >> "$GITHUB_OUTPUT"
+          fi
+      - name: Validate cask and install archive
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          brew tap --custom-remote goldberg-consulting/tap "$GITHUB_WORKSPACE"
+          cp Casks/find-yoshi-it.rb "$(brew --repository goldberg-consulting/tap)/Casks/find-yoshi-it.rb"
+          brew style --cask goldberg-consulting/tap/find-yoshi-it
+          mkdir -p "$RUNNER_TEMP/apps"
+          brew install --cask --appdir="$RUNNER_TEMP/apps" goldberg-consulting/tap/find-yoshi-it
+          codesign --verify --deep --strict "$RUNNER_TEMP/apps/Find Yoshi IT.app"
+      - name: Publish cask update
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add Casks/find-yoshi-it.rb
+          git commit -m 'Update Find Yoshi IT to latest stable release'
+          git push origin HEAD:main
