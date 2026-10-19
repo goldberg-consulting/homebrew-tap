@@ -1,6 +1,6 @@
 cask "find-yoshi-it" do
-  version "0.1.3"
-  sha256 "cdbe0d89918c057b493ad6b6fee5c7e5767fd00cbd86456a24392d803f9f0d90"
+  version "0.1.4"
+  sha256 "39aca64787d8bffe1330f2bef779d52a29e544d7c69eeb6da045e4f7dbf1575c"
 
   url "https://github.com/goldberg-consulting/find-yoshi-it/releases/download/v#{version}/Find-Yoshi-IT-v#{version}-macOS-arm64.zip"
   name "Find Yoshi IT"
