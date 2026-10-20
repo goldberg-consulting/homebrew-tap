@@ -59,3 +59,12 @@ gh workflow run update-find-yoshi-it.yml --repo goldberg-consulting/homebrew-tap
 ## License
 
 MIT
+
+## Measured Notes
+
+Local macOS notes with quick capture, Markdown, tables, and checklists.
+Requires Apple silicon and macOS 26 or later. Signed and notarized by Apple.
+
+```sh
+brew install --cask goldberg-consulting/tap/measured-notes
+```
