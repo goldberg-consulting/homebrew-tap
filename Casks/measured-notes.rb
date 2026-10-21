@@ -1,6 +1,6 @@
 cask "measured-notes" do
-  version "0.1.4"
-  sha256 "21bfeb02b16b0ea5fcd48008fe58b64816d470df6bc2cd35072ca516cb582ed4"
+  version "0.1.5"
+  sha256 "949e32c86136f426dc82309622d22b46c5f140196b4c6910a823c07e014d588d"
 
   url "https://github.com/goldberg-consulting/measured-notes/releases/download/v#{version}/measured-notes-#{version}-arm64.zip"
   name "Measured Notes"
